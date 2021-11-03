@@ -1,4 +1,4 @@
-from Domain.carte import creeazaCarte, getID
+from Domain.carte import creeazaCarte, getID, getTipReducereClient, getPret
 
 
 def adaugaCarte(ID, titlu, gen, pret, tipReducereClient, lista):
@@ -12,7 +12,13 @@ def adaugaCarte(ID, titlu, gen, pret, tipReducereClient, lista):
     :param lista: lista de carti
     :return: o lista continand vechile carti si noile carti
     '''
+    if getByID(id, lista) is not None:
+        raise ValueError(":ID-ul este deja folosit")
     carte = creeazaCarte(ID, titlu, gen, pret, tipReducereClient)
+    if getPret(carte) < 0:
+        raise ValueError(":pretul este negativ! Incorect")
+    if getTipReducereClient(carte) != "gold" and getTipReducereClient(carte) != "silver":
+        raise ValueError(":reducerea adaugata nu exista")
     return lista + [carte]
 
 def getByID(ID, lista):
