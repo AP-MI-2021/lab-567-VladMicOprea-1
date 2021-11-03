@@ -4,20 +4,19 @@ from Logic.CRUD import modificaCarte, stergereCarte, adaugaCarte
 
 def uiAdaugaCarte(listaComenzi,lista):
     try:
-        ID = input(listaComenzi[1])
-        titlu = input(listaComenzi[2])
-        gen = input(listaComenzi[3])
-        pret = float(input(listaComenzi[4]))
-        tipReducereClient = input(listaComenzi[5])
+        ID = listaComenzi[0]
+        titlu = listaComenzi[1]
+        gen = listaComenzi[2]
+        pret = float(listaComenzi[3])
+        tipReducereClient = listaComenzi[4]
         return adaugaCarte(ID, titlu, gen, pret, tipReducereClient, lista)
     except ValueError as ve:
         print("Eroare: {}".format(ve))
         return lista
 
-
 def uiStergereCarte(listaComenzi,lista):
     try:
-        ID = input(listaComenzi[1])
+        ID = listaComenzi[0]
         return stergereCarte(ID, lista)
     except ValueError as ve:
         print("Eroare: {}".format(ve))
@@ -25,11 +24,11 @@ def uiStergereCarte(listaComenzi,lista):
 
 def uiModificaCarte(listaComenzi,lista):
     try:
-        ID = input(listaComenzi[1])
-        titlu = input(listaComenzi[2])
-        gen = input(listaComenzi[3])
-        pret = float(input(listaComenzi[4]))
-        tipReducereClient = input(listaComenzi[5])
+        ID = listaComenzi[0]
+        titlu = listaComenzi[1]
+        gen = listaComenzi[2]
+        pret = float(listaComenzi[3])
+        tipReducereClient = listaComenzi[4]
         return modificaCarte(ID, titlu, gen, pret, tipReducereClient, lista)
     except ValueError as ve:
         print("Eroare: {}".format(ve))
@@ -55,23 +54,24 @@ def Help():
 def Menu2(lista):
     try:
         while True:
-            Help()
             comenzi = input("Comenzi separate prin ';' si instructiunile comenzii separate prin ','")
-            comenzi = comenzi.split(";")
-            for comanda in comenzi:
-                comanda = comanda.split(",")
             listaComenzi = []
-            for detalii in comanda:
-                listaComenzi.append(detalii)
-                if listaComenzi[0] == "Add" :
-                    lista = uiAdaugaCarte(listaComenzi, lista)
-                elif listaComenzi[0] == "Delete":
-                    lista = uiStergereCarte(listaComenzi, lista)
-                elif listaComenzi[0] == "Modify":
-                    lista = uiModificaCarte(listaComenzi, lista)
-                elif listaComenzi[0] == "Show all":
+            listaComenzi = comenzi.split(";")
+            for comanda in listaComenzi:
+                operatie = []
+                operatie = comanda.split(",")
+                if operatie[0] == "Add" :
+                    operatie.pop(0)
+                    lista = uiAdaugaCarte(operatie, lista)
+                elif operatie[0] == "Delete":
+                    operatie.pop(0)
+                    lista = uiStergereCarte(operatie, lista)
+                elif operatie[0] == "Modify":
+                    operatie.pop(0)
+                    lista = uiModificaCarte(operatie, lista)
+                elif operatie[0] == "Show all":
                     showAll(lista)
-                elif listaComenzi[0] == "Iesire":
+                elif operatie[0] == "Iesire":
                     break
                 else:
                     print("Optiune gresita! Reincercati: ")
