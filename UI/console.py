@@ -14,27 +14,37 @@ def printMenu():
 
 
 def uiAdaugaCarte(lista):
-    ID = input("Dati ID-ul: ")
-    titlu = input("Dati titlul: ")
-    gen = input("Dati genul: ")
-    pret = float(input("Dati pretul: "))
-    tipReducereClient = input("Dati tipul reducerii clientului: ")
-    return adaugaCarte(ID, titlu, gen, pret, tipReducereClient, lista)
+    try:
+        ID = input("Dati ID-ul: ")
+        titlu = input("Dati titlul: ")
+        gen = input("Dati genul: ")
+        pret = float(input("Dati pretul: "))
+        tipReducereClient = input("Dati tipul reducerii clientului: ")
+        return adaugaCarte(ID, titlu, gen, pret, tipReducereClient, lista)
+    except ValueError as ve:
+        print("Eroare: {}".format(ve))
+        return lista
 
 
 def uiStergereCarte(lista):
-    ID = input("Dati noul ID: ")
-    return stergereCarte(ID, lista)
-
+    try:
+        ID = input("Dati noul ID: ")
+        return stergereCarte(ID, lista)
+    except ValueError as ve:
+        print("Eroare: {}".format(ve))
+        return lista
 
 def uiModificaCarte(lista):
-    ID = input("Dati ID-ul: ")
-    titlu = input("Dati noul titlu: ")
-    gen = input("Dati noul gen: ")
-    pret = float(input("Dati noul pret: "))
-    tipReducereClient = input("Dati noul tip de reducere al clientului: ")
-    return modificaCarte(ID, titlu, gen, pret, tipReducereClient, lista)
-
+    try:
+        ID = input("Dati ID-ul: ")
+        titlu = input("Dati noul titlu: ")
+        gen = input("Dati noul gen: ")
+        pret = float(input("Dati noul pret: "))
+        tipReducereClient = input("Dati noul tip de reducere al clientului: ")
+        return modificaCarte(ID, titlu, gen, pret, tipReducereClient, lista)
+    except ValueError as ve:
+        print("Eroare: {}".format(ve))
+        return lista
 
 def showAll(lista):
     for carte in lista:
