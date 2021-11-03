@@ -48,6 +48,7 @@ def Help():
     Delete,ID
     Modify,ID,titlu,gen,pret,tipReducereClient
     Show all
+    help
     Iesire
      """)
 
@@ -71,6 +72,8 @@ def Menu2(lista):
                     lista = uiModificaCarte(operatie, lista)
                 elif operatie[0] == "Show all":
                     showAll(lista)
+                elif operatie[0] == "help":
+                    Help()
                 elif operatie[0] == "Iesire":
                     break
                 else:
