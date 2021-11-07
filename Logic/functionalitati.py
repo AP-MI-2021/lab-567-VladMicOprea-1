@@ -14,7 +14,7 @@ def discount(lista):
                 getID(carte),
                 getTitlu(carte),
                 getGen(carte),
-                getPret(carte) - 5/100 * getPret(carte),
+                getPret(carte) - 5 / 100 * getPret(carte),
                 getTipReducereClient(carte)
             )
             listaNoua.append(carteNoua)
@@ -30,6 +30,7 @@ def discount(lista):
         else:
             listaNoua.append(carte)
     return listaNoua
+
 
 def modificareLista(titlu, gen, lista):
     '''
@@ -52,3 +53,35 @@ def modificareLista(titlu, gen, lista):
         else:
             listaNoua.append(carte)
     return listaNoua
+
+
+def pretMinim(lista):
+    '''
+    determina pretul minim pentru fiecare gen
+    :param lista: lista de carti
+    :return: dictionar in care se determina pretul minim pentru fiecare gen
+    '''
+    minim = {}
+    for carte in lista:
+        gen = getGen(carte)
+        pret = getPret(carte)
+        if gen in minim:
+            if pret < minim[gen]:
+                minim[gen] = pret
+        else:
+            minim[gen] = pret
+    return minim
+
+
+def pret(carte):
+    return getPret(carte)
+
+
+def ordonareDupaPret(lista):
+    '''
+    sorteaza cartile dupa pretul lor
+    :return: lista sortata de carti dupa pret
+    '''
+    return sorted(lista, key=pret)
+
+

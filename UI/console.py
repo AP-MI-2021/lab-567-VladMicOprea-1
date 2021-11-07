@@ -1,6 +1,6 @@
 from Domain.carte import toString
 from Logic.CRUD import adaugaCarte, stergereCarte, modificaCarte
-from Logic.functionalitati import discount, modificareLista
+from Logic.functionalitati import discount, modificareLista, pretMinim, ordonareDupaPret
 
 
 def printMenu():
@@ -9,6 +9,8 @@ def printMenu():
     print("3. Modifica carte")
     print("4. Aplicarea unui discount de 5% pentru toate reducerile silver și 10% pentru toate reducerile gold")
     print("5. Modificarea genului pentru un titlu dat")
+    print("6. Determinarea prețului minim pentru fiecare gen")
+    print("7. Ordonarea vanzarilor crescator după pret")
     print("a. Afisare carti")
     print("0. Iesire")
 
@@ -34,6 +36,7 @@ def uiStergereCarte(lista):
         print("Eroare: {}".format(ve))
         return lista
 
+
 def uiModificaCarte(lista):
     try:
         ID = input("Dati ID-ul: ")
@@ -46,6 +49,7 @@ def uiModificaCarte(lista):
         print("Eroare: {}".format(ve))
         return lista
 
+
 def showAll(lista):
     for carte in lista:
         print(toString(carte))
@@ -54,16 +58,27 @@ def showAll(lista):
 def uiDiscount(lista):
     return discount(lista)
 
+
 def uiModificareLista(lista):
     titlu = input("Dati noul titlu: ")
     gen = input("Dati noul gen: ")
     return modificareLista(titlu, gen, lista)
 
+
+def uiPretMinim(lista):
+    minim = pretMinim(lista)
+    for gen in minim:
+        print("Genul {} are pretul minim de {}".format(gen, minim[gen]))
+
+
+def uiOrdonareDupaPret(lista):
+    showAll(ordonareDupaPret(lista))
+
+
 def runMenu(lista):
     while True:
         printMenu()
         optiune = input("Dati optiunea: ")
-
         if optiune == "1":
             lista = uiAdaugaCarte(lista)
         elif optiune == "2":
@@ -74,6 +89,10 @@ def runMenu(lista):
             lista = uiDiscount(lista)
         elif optiune == "5":
             lista = uiModificareLista(lista)
+        elif optiune == "6":
+            uiPretMinim(lista)
+        elif optiune == "7":
+            uiOrdonareDupaPret(lista)
         elif optiune == "a":
             showAll(lista)
         elif optiune == "0":

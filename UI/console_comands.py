@@ -2,7 +2,7 @@ from Domain.carte import toString
 from Logic.CRUD import modificaCarte, stergereCarte, adaugaCarte
 
 
-def uiAdaugaCarte(listaComenzi,lista):
+def uiAdaugaCarte(listaComenzi, lista):
     try:
         ID = listaComenzi[0]
         titlu = listaComenzi[1]
@@ -14,7 +14,8 @@ def uiAdaugaCarte(listaComenzi,lista):
         print("Eroare: {}".format(ve))
         return lista
 
-def uiStergereCarte(listaComenzi,lista):
+
+def uiStergereCarte(listaComenzi, lista):
     try:
         ID = listaComenzi[0]
         return stergereCarte(ID, lista)
@@ -22,7 +23,8 @@ def uiStergereCarte(listaComenzi,lista):
         print("Eroare: {}".format(ve))
         return lista
 
-def uiModificaCarte(listaComenzi,lista):
+
+def uiModificaCarte(listaComenzi, lista):
     try:
         ID = listaComenzi[0]
         titlu = listaComenzi[1]
@@ -34,9 +36,11 @@ def uiModificaCarte(listaComenzi,lista):
         print("Eroare: {}".format(ve))
         return lista
 
+
 def showAll(lista):
     for carte in lista:
         print(toString(carte))
+
 
 def Help():
     '''
@@ -52,6 +56,7 @@ def Help():
     Iesire
      """)
 
+
 def Menu2(lista):
     try:
         while True:
@@ -61,7 +66,7 @@ def Menu2(lista):
             for comanda in listaComenzi:
                 operatie = []
                 operatie = comanda.split(",")
-                if operatie[0] == "Add" :
+                if operatie[0] == "Add":
                     operatie.pop(0)
                     lista = uiAdaugaCarte(operatie, lista)
                 elif operatie[0] == "Delete":
