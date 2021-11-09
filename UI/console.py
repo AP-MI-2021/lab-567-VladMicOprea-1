@@ -11,40 +11,51 @@ def printMenu():
     print("5. Modificarea genului pentru un titlu dat")
     print("6. Determinarea prețului minim pentru fiecare gen")
     print("7. Ordonarea vanzarilor crescator după pret")
+    print("u. Undo")
+    print("r. Redo")
     print("a. Afisare carti")
     print("0. Iesire")
 
 
-def uiAdaugaCarte(lista):
+def uiAdaugaCarte(lista, undoList, redoList):
     try:
         ID = input("Dati ID-ul: ")
         titlu = input("Dati titlul: ")
         gen = input("Dati genul: ")
         pret = float(input("Dati pretul: "))
         tipReducereClient = input("Dati tipul reducerii clientului: ")
-        return adaugaCarte(ID, titlu, gen, pret, tipReducereClient, lista)
+        rezultat = adaugaCarte(ID, titlu, gen, pret, tipReducereClient, lista)
+        undoList.append(lista)
+        redoList.clear()
+        return rezultat
     except ValueError as ve:
         print("Eroare: {}".format(ve))
         return lista
 
 
-def uiStergereCarte(lista):
+def uiStergereCarte(lista, undoList, redoList):
     try:
         ID = input("Dati noul ID: ")
-        return stergereCarte(ID, lista)
+        rezultat = stergereCarte(ID, lista)
+        undoList.append(lista)
+        redoList.clear()
+        return rezultat
     except ValueError as ve:
         print("Eroare: {}".format(ve))
         return lista
 
 
-def uiModificaCarte(lista):
+def uiModificaCarte(lista, undoList, redoList):
     try:
         ID = input("Dati ID-ul: ")
         titlu = input("Dati noul titlu: ")
         gen = input("Dati noul gen: ")
         pret = float(input("Dati noul pret: "))
         tipReducereClient = input("Dati noul tip de reducere al clientului: ")
-        return modificaCarte(ID, titlu, gen, pret, tipReducereClient, lista)
+        rezultat = modificaCarte(ID, titlu, gen, pret, tipReducereClient, lista)
+        undoList.append(lista)
+        redoList.clear()
+        return rezultat
     except ValueError as ve:
         print("Eroare: {}".format(ve))
         return lista
@@ -59,11 +70,13 @@ def uiDiscount(lista):
     return discount(lista)
 
 
-def uiModificareLista(lista):
+def uiModificareLista(lista, undoList, redoList):
     titlu = input("Dati noul titlu: ")
     gen = input("Dati noul gen: ")
-    return modificareLista(titlu, gen, lista)
-
+    rezultat = modificareLista(titlu, gen, lista)
+    undoList.append(lista)
+    redoList.clear()
+    return rezultat
 
 def uiPretMinim(lista):
     minim = pretMinim(lista)
@@ -76,23 +89,37 @@ def uiOrdonareDupaPret(lista):
 
 
 def runMenu(lista):
+    undoList = []
+    redoList = []
     while True:
         printMenu()
         optiune = input("Dati optiunea: ")
         if optiune == "1":
-            lista = uiAdaugaCarte(lista)
+            lista = uiAdaugaCarte(lista, undoList, redoList)
         elif optiune == "2":
-            lista = uiStergereCarte(lista)
+            lista = uiStergereCarte(lista, undoList, redoList)
         elif optiune == "3":
-            lista = uiModificaCarte(lista)
+            lista = uiModificaCarte(lista, undoList, redoList)
         elif optiune == "4":
             lista = uiDiscount(lista)
         elif optiune == "5":
-            lista = uiModificareLista(lista)
+            lista = uiModificareLista(lista, undoList, redoList)
         elif optiune == "6":
             uiPretMinim(lista)
         elif optiune == "7":
             uiOrdonareDupaPret(lista)
+        elif optiune == "u":
+            if len(undoList) > 0:
+                redoList.append(lista)
+                lista = undoList.pop()
+            else:
+                print("Nu se poate face undo!")
+        elif optiune == "r":
+            if len(redoList) > 0:
+                undoList.append(lista)
+                lista = redoList.pop()
+            else:
+                print("Nu se poate face redo!")
         elif optiune == "a":
             showAll(lista)
         elif optiune == "0":
