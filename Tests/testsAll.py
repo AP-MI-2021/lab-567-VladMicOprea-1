@@ -1,6 +1,8 @@
 from Tests.testCRUD import testAdaugaCarte, testStergereCarte, testModificaCartea
 from Tests.testDomain import testCarte
-from Tests.testFunctionalitati import testDiscount, testModificareLista, testPretMinim, testOrdonareDupaPret
+from Tests.testFunctionalitati import testDiscount, testModificareLista, testPretMinim, testOrdonareDupaPret, \
+    testCartiCuTitluriDistincte
+from Tests.testUndoRedo import testUndoRedo
 
 
 def runAllTests():
@@ -12,3 +14,5 @@ def runAllTests():
     testModificareLista()
     testPretMinim()
     testOrdonareDupaPret()
+    testUndoRedo()
+    testCartiCuTitluriDistincte()

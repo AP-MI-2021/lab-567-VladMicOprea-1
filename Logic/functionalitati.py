@@ -84,4 +84,21 @@ def ordonareDupaPret(lista):
     '''
     return sorted(lista, key=pret)
 
-
+def cartiCuTitluriDistincte(lista):
+    '''
+    determina numarul de titluri distincte pentru fiecare gen
+    :param lista: lista de carti
+    :return: numarul de titluri distincte pentru fiecare gen
+    '''
+    nr = 1
+    rezultat = {}
+    for carte in lista:
+        gen = getGen(carte)
+        titlu = getTitlu(carte)
+        if gen in rezultat:
+            if titlu != rezultat[gen]:
+                nr = nr+1
+                rezultat[gen] = nr
+        else:
+            rezultat[gen] = 1
+    return rezultat

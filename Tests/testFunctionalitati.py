@@ -1,6 +1,6 @@
 from Domain.carte import getPret, getGen, getID
 from Logic.CRUD import adaugaCarte, getByID
-from Logic.functionalitati import discount, modificareLista, pretMinim, ordonareDupaPret
+from Logic.functionalitati import discount, modificareLista, pretMinim, ordonareDupaPret, cartiCuTitluriDistincte
 
 
 def testDiscount():
@@ -48,3 +48,15 @@ def testOrdonareDupaPret():
 
     assert getID(rezultat[0]) == "2"
     assert getID(rezultat[1]) == "1"
+
+
+def testCartiCuTitluriDistincte():
+    lista = []
+    lista = adaugaCarte("1", "Ion", "roman", 50.0, "silver", lista)
+    lista = adaugaCarte("2", "Baltagul", "roman", 45.0, "gold", lista)
+    lista = adaugaCarte("3", "Moara cu noroc", "nuvela", 40.0, "gold", lista)
+
+    lista = cartiCuTitluriDistincte(lista)
+
+    assert lista["roman"] == 2
+    assert lista["nuvela"] == 1

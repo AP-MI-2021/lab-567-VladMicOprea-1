@@ -1,6 +1,6 @@
 from Domain.carte import toString
 from Logic.CRUD import adaugaCarte, stergereCarte, modificaCarte
-from Logic.functionalitati import discount, modificareLista, pretMinim, ordonareDupaPret
+from Logic.functionalitati import discount, modificareLista, pretMinim, ordonareDupaPret, cartiCuTitluriDistincte
 
 
 def printMenu():
@@ -11,6 +11,7 @@ def printMenu():
     print("5. Modificarea genului pentru un titlu dat")
     print("6. Determinarea prețului minim pentru fiecare gen")
     print("7. Ordonarea vanzarilor crescator după pret")
+    print("8. Afișarea numărului de titluri distincte pentru fiecare gen")
     print("u. Undo")
     print("r. Redo")
     print("a. Afisare carti")
@@ -66,9 +67,11 @@ def showAll(lista):
         print(toString(carte))
 
 
-def uiDiscount(lista):
-    return discount(lista)
-
+def uiDiscount(lista, undoList, redoList):
+    rezultat = discount(lista)
+    undoList.append(lista)
+    redoList.clear()
+    return rezultat
 
 def uiModificareLista(lista, undoList, redoList):
     titlu = input("Dati noul titlu: ")
@@ -88,6 +91,11 @@ def uiOrdonareDupaPret(lista):
     showAll(ordonareDupaPret(lista))
 
 
+def uiCartiCuTitluriDistincte(lista):
+    print(cartiCuTitluriDistincte(lista))
+
+
+
 def runMenu(lista):
     undoList = []
     redoList = []
@@ -101,13 +109,15 @@ def runMenu(lista):
         elif optiune == "3":
             lista = uiModificaCarte(lista, undoList, redoList)
         elif optiune == "4":
-            lista = uiDiscount(lista)
+            lista = uiDiscount(lista, undoList, redoList)
         elif optiune == "5":
             lista = uiModificareLista(lista, undoList, redoList)
         elif optiune == "6":
             uiPretMinim(lista)
         elif optiune == "7":
             uiOrdonareDupaPret(lista)
+        elif optiune == "8":
+            uiCartiCuTitluriDistincte(lista)
         elif optiune == "u":
             if len(undoList) > 0:
                 redoList.append(lista)
